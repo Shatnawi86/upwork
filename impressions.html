@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <link href="css/output.css" rel="stylesheet" />
+
+</head>
+
+<body class="bg-zinc-900 text-white">
+    <div class="flex flex-col h-screen">
+        <div class="flex items-center justify-between p-6">
+            <h1 class="text-xl uppercase font-nexa font-semibold">Impressions Calculator</h1>
+            <a href="index.html">
+                <img src="images/logo.svg" alt="Logo" class="h-8 ml-4" />
+            </a>
+        </div>
+
+        <div class="w-full sm:max-w-[80%] space-y-2 p-6">
+            <div class="space-y-4">
+
+                <div class="grid sm:grid-cols-4 gap-2">
+                    <span class="font-medium text-left">In-store Flyers</span>
+                    <span class="text-gray-300 text-sm text-left col-span-2">
+                        Comments and what we do, paid for, effectiveness, conversion rate, etc. More comments, more
+                        comments, more comments.
+                    </span>
+                    <div class="flex gap-2 items-center">
+                        <input type="number" min="0"
+                            class="bg-gray-200 text-gray-900 px-4 py-2 rounded-md w-32 focus:outline-none focus:ring-2 focus:ring-sky-500">
+                        <span class="text-gray-400 text-sm">/day</span>
+                    </div>
+                </div>
+
+                <div class="grid sm:grid-cols-4 gap-2">
+                    <span class="font-medium text-left">Promo People</span>
+                    <span class="text-gray-300 text-sm text-left col-span-2">
+                        Comme effectiments, more comments.
+                    </span>
+                    <div class="flex gap-2 items-center">
+                        <input type="number" min="0"
+                            class="bg-gray-200 text-gray-900 px-4 py-2 rounded-md w-32 focus:outline-none focus:ring-2 focus:ring-sky-500">
+                        <span class="text-gray-400 text-sm">promotional days</span>
+                    </div>
+                </div>
+
+                <div class="grid sm:grid-cols-4 gap-2">
+                    <span class="font-medium text-left">SMS</span>
+                    <span class="text-gray-300 text-sm text-left col-span-2">
+                        Comments and what we do, paid for, effectiveness, conversion rate, etc. More comments, more
+                        comments, more comments.
+                    </span>
+                    <div class="flex gap-2 items-center">
+                        <input type="number" min="0"
+                            class="bg-gray-200 text-gray-900 px-4 py-2 rounded-md w-32 focus:outline-none focus:ring-2 focus:ring-sky-500">
+                        <span class="text-gray-400 text-sm">mobile numbers</span>
+                    </div>
+                </div>
+
+                <div class="grid sm:grid-cols-4 gap-2">
+                    <span class="font-medium text-left">Email</span>
+                    <span class="text-gray-300 text-sm text-left col-span-2">
+                        Comments and what we do, paid for, effectiveness, conversion rate, etc. More comments, more
+                        comments, more comments.
+                    </span>
+                    <div class="flex gap-2 items-center">
+                        <input type="number" min="0"
+                            class="bg-gray-200 text-gray-900 px-4 py-2 rounded-md w-32 focus:outline-none focus:ring-2 focus:ring-sky-500">
+                        <span class="text-gray-400 text-sm">email addresses</span>
+                    </div>
+                </div>
+
+                <div class="grid sm:grid-cols-4 gap-2">
+                    <span class="font-medium text-left">Social Media</span>
+                    <span class="text-gray-300 text-sm text-left col-span-2">
+                        Comments and what we do, paid for, effectiveness, conversion rate, etc. More comments, more
+                        comments, more comments.
+                    </span>
+                    <div class="flex gap-2 items-center">
+                        <input type="number" min="0"
+                            class="bg-gray-200 text-gray-900 px-4 py-2 rounded-md w-32 focus:outline-none focus:ring-2 focus:ring-sky-500">
+                        <span class="text-gray-400 text-sm">followers/subscribers</span>
+                    </div>
+                </div>
+
+                <div class="grid sm:grid-cols-4 gap-2">
+                    <span class="font-medium text-left">Other</span>
+                    <span class="text-gray-300 text-sm text-left col-span-2">
+                        Comments and what we do, paid for, effectiveness, conversion rate, etc. More comments, more
+                        comments, more comments.
+                    </span>
+                    <div class="flex gap-2 items-center">
+                        <input type="number" min="0"
+                            class="bg-gray-200 text-gray-900 px-4 py-2 rounded-md w-32 focus:outline-none focus:ring-2 focus:ring-sky-500">
+                        <span class="text-gray-400 text-sm">/month</span>
+                    </div>
+                </div>
+            </div>
+            <div class="flex justify-end">
+                <button id="doneButton"
+                    class="rounded-lg bg-gray-500 transition-all duration-300 p-2 px-4 text-zinc-900"
+                    disabled="true">Done</button>
+            </div>
+        </div>
+
+</body>
+<script>
+    // Define the data structure (for this page, retrieve it from localStorage)
+    const data = JSON.parse(localStorage.getItem('database'));
+    const doneButton = document.getElementById('doneButton');
+    // Parse query string to get selectedCategory
+    const urlParams = new URLSearchParams(window.location.search);
+    const selectedCategory = urlParams.get('category');
+    const inputs = document.querySelectorAll('input[type="number"]');
+
+
+    // Populate inputs based on selectedCategory Impressions
+    if (selectedCategory && data[selectedCategory]) {
+        const impressions = data[selectedCategory].Impressions;
+
+        inputs.forEach((input, index) => {
+            // Set the value if it's not null, otherwise leave empty
+            input.value = impressions[index] !== null ? impressions[index] : '';
+        });
+        checkInputs();
+    } else {
+        window.location = "index.html";
+    }
+
+    // Function to check if all inputs have values
+    function checkInputs() {
+        const allFilled = Array.from(inputs).every(input => input.value.trim() !== '');
+
+        if (allFilled) {
+            doneButton.disabled = false;
+            doneButton.classList.remove('bg-gray-500');
+            doneButton.classList.add('bg-lime-600', 'hover:bg-lime-800');
+        } else {
+            doneButton.disabled = true;
+            doneButton.classList.add('bg-gray-500');
+            doneButton.classList.remove('bg-lime-600', 'hover:bg-lime-800');
+        }
+    }
+
+    // Add input event listeners to all inputs
+    inputs.forEach(input => {
+        input.addEventListener('input', checkInputs);
+    });
+    // Function to update data when the "Done" button is clicked
+    function updateData() {
+        const updatedValues = Array.from(inputs).map(input =>
+            input.value.trim() !== '' ? parseInt(input.value, 10) : null
+        );
+
+        // Update the data for the selected category
+        const db = JSON.parse(localStorage.getItem('database'));
+        db[selectedCategory].Impressions = updatedValues;
+        localStorage.setItem('database', JSON.stringify(db));
+
+    }
+
+    // Add click event listener to the "Done" button
+    doneButton.addEventListener('click', () => {
+        if (!doneButton.disabled) {
+            updateData();
+            window.location = "index.html";
+        }
+    });
+
+</script>
+
+</html>

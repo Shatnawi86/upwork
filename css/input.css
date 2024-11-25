@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.chk{
+    accent-color: rgb(101 163 13);
+}
+.funnel-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.3rem;
+  }
+
+  .funnel-impressions {
+    clip-path: polygon(0% 0%, 100% 5%, 100% 95%, 0% 100%);
+    width: 80%;
+    padding: 2rem;
+  }
+
+  .funnel-registrations {
+    clip-path: polygon(0% 5%, 100% 20%, 100% 80%, 0% 95%);
+    width: 70%;
+    padding: 2rem;
+  }
+
+  .funnel-subscriptions {
+    clip-path: polygon(0% 20%, 100% 20%, 100% 80%, 0% 80%);
+    width: 60%;
+    padding: 2rem;
+  }
+
+@layer base {
+    @font-face {
+      font-family: 'Nexa Rust Sans';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url(/fonts/NexaRustSans-Trial-Black2.woff2) format('woff2');
+    }
+  }
